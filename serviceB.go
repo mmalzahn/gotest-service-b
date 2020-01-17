@@ -20,12 +20,16 @@ func main() {
 	api.HandleFunc("/test/{userID}", homePage).Methods(http.MethodGet)
 
 	r.HandleFunc("/", homePage)
-	log.Fatal(http.ListenAndServe(":8081", r))
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
+
+
+
+
 func homePage(w http.ResponseWriter, r *http.Request) {
 	reqParameters := mux.Vars(r)
 	var uri string
-	uri = "http://localhost:8080/v1/user/" + reqParameters["userID"]
+	uri = "http://service-a:8080/v1/user/" + reqParameters["userID"]
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", uri, nil)
 	res, err := client.Do(req)
